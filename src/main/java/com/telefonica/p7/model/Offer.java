@@ -19,4 +19,46 @@ public class Offer {
     private LocalDate dateBegining;
     private LocalDate dateEnd;
     private String offerDescription;
+
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getOfferName() {
+        return this.offerName;
+    }
+
+    public void setOfferName(String offerName) {
+        this.offerName = offerName;
+    }
+
+    public LocalDate getDateBegining() {
+        return this.dateBegining;
+    }
+
+    public void setDateBegining(LocalDate dateBegining) {
+        this.dateBegining = dateBegining;
+    }
+
+    public LocalDate getDateEnd() {
+        return this.dateEnd;
+    }
+
+    public void setDateEnd(LocalDate dateEnd) {
+        this.dateEnd = dateEnd;
+    }
+
+    public String getOfferDescription() {
+        return this.offerDescription;
+    }
+
+    public void setOfferDescription(String offerDescription) {
+        this.offerDescription = offerDescription;
+    }
+
 }

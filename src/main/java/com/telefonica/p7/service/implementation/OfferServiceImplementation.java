@@ -16,5 +16,10 @@ public class OfferServiceImplementation implements OfferService{
     public Iterable<Offer> getOffer(){
         return offerRepository.findAll();
     }
+
+    @Override
+    public void deleteOffer(String id){
+        offerRepository.deleteById(id);
+    }
     
 }
