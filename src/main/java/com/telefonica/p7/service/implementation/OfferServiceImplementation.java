@@ -21,5 +21,10 @@ public class OfferServiceImplementation implements OfferService{
     public void deleteOffer(String id){
         offerRepository.deleteById(id);
     }
+
+    @Override
+    public Offer insertOffer(Offer offer){
+        return offerRepository.save(offer);
+    }
     
 }
