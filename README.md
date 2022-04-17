@@ -4,5 +4,7 @@ Práctica 7 de PAT
 
 ### notas
 
+- Añadir otra base de datos e implementar dos Joins
 - Falta implementar la comprobación de que no haya errores y feedback al usuario
-- Implementar un get de un ID concreto. No tiene aplicación directa en el frontend pero da igual
+- Conectar lo de editar con el frontend
+- Añadir anotaciones en el javascript para que sea explicativo
