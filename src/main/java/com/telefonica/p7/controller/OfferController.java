@@ -30,6 +30,14 @@ public class OfferController {
         return ResponseEntity.ok().body(response);
     }
 
+    @GetMapping("/offers/with-application")
+    public ResponseEntity<Iterable<Offer>> getOffersWithApplication() {
+
+        Iterable<Offer> response = offerService.getOffersWithApplication();
+
+        return ResponseEntity.ok().body(response);
+    }
+
 
     @GetMapping("/offers/{id}")
     public ResponseEntity<Offer> getOffer(@PathVariable String id){

@@ -11,5 +11,8 @@ public interface OfferRepository extends CrudRepository<Offer,String> {
 
     @Query("SELECT * FROM OFFER WHERE OFFER.ID= :id")
     public Iterable<Offer> getOfferByID(String id);
+
+    @Query("SELECT DISTINCT OFFER.ID, OFFER_NAME, DATE_BEGINING, DATE_END, OFFER_DESCRIPTION, OFFER_AVAILABLE FROM OFFER INNER JOIN APPLICATIONS ON OFFER.ID=APPLICATIONS.OFFER_ID")
+    public Iterable<Offer> getOffersWithApplication();
 }
 

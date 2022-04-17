@@ -23,6 +23,11 @@ public class OfferServiceImplementation implements OfferService{
     }
 
     @Override
+    public Iterable<Offer> getOffersWithApplication(){
+        return offerRepository.getOffersWithApplication();
+    }
+
+    @Override
     public Offer getOffer(String id){
         Offer response = null;
         if(offerRepository.existsById(id)){
