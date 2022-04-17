@@ -1,3 +1,4 @@
+// deletes an offer, gets the new list of offers and displays it
 const deleteOfferAndUpdate = async (id) => {
     let request = await fetch("/api/v1/offers/" + id, {
         method: 'DELETE',
@@ -8,6 +9,7 @@ const deleteOfferAndUpdate = async (id) => {
     }
 }
 
+// creates an offer, gets the new list of offers and displays it
 const createOfferAndDisplay = async () => {
 
     let dates = await getDates();
@@ -41,6 +43,7 @@ const createOfferAndDisplay = async () => {
     }
 }
 
+// deletes an offer, gets the new list of offers and displays it
 const getDates = async () => {
     let a = $('#inputDateBegining').val();
     let b = $('#inputDateEnd').val();
@@ -51,6 +54,7 @@ const getDates = async () => {
     return {begining, end}
 }
 
+// gets the new list of offers and displays it
 const getOffersAndDisplay = async () => {
     let request = await fetch("/api/v1/offers", {
         method: 'GET',
