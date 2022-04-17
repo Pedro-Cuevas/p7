@@ -20,7 +20,6 @@ public class Offer {
     private LocalDate dateEnd;
     private String offerDescription;
 
-
     public String getId() {
         return this.id;
     }

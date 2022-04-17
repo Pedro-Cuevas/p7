@@ -8,6 +8,47 @@ const deleteOfferAndUpdate = async (id) => {
     }
 }
 
+const createOfferAndDisplay = async () => {
+
+    let dates = await getDates();
+    begin = dates.begining;
+    end = dates.end;
+
+    let txt_body = '{ "offerName": "'
+        + $('#inputName').val()
+        + '", "dateBegining": "'
+        + begin
+        + '", "dateEnd": "'
+        + end
+        + '", "offerDescription": "'
+        + $('#inputDescription').val()
+        + '"}';
+
+    let request = await fetch("/api/v1/offers", {
+        body: txt_body,
+        method: 'POST',
+        body: txt_body,
+        headers: {
+            "Content-Type": "application/json", // Indico que mis datos van a estar en JSON
+        },
+        dataType: "json",
+    });
+
+    if(request.ok) {
+        getOffersAndDisplay();
+    }
+}
+
+const getDates = async () => {
+    let a = $('#inputDateBegining').val();
+    let b = $('#inputDateBegining').val();
+
+    let begining = a.substr(-4,4) + '-' + a.substr (3,2) + '-' + a.substr(0,2);
+    let end = b.substr(-4,4) + '-' + b.substr (3,2) + '-' + b.substr(0,2);
+
+    return {begining, end}
+}
+
 const getOffersAndDisplay = async () => {
     let request = await fetch("/api/v1/offers", {
         method: 'GET',
@@ -33,6 +74,10 @@ const getOffersAndDisplay = async () => {
             $('#' + obj.id + 'delete_btn').click(() => deleteOfferAndUpdate(obj.id));
         });
     }
+
+    let val = $('#inputDateBegining').val();
+    console.log(val);
 }
 
+$('#btnOferta').click(() => createOfferAndDisplay());
 getOffersAndDisplay();

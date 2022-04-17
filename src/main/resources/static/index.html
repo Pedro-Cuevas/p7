@@ -67,21 +67,21 @@
                     <form>
                         <div class="row gy-4">
                             <div class="col-md-12">
-                                <input type="text" name="name" class="form-control" placeholder="Nombre" required="">
+                                <input type="text" name="name" class="form-control" id="inputName" placeholder="Nombre" required="">
                             </div>
                             <div class="col-md-12">
-                                <textarea class="form-control" name="message" rows="3" placeholder="Descripción" required=""></textarea>
+                                <textarea class="form-control" name="message" id="inputDescription" rows="3" placeholder="Descripción" required=""></textarea>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group"> <!-- Date input -->
                                     <label class="control-label" for="date">Fecha de inicio</label>
-                                    <input class="form-control" id="dateBegin" name="date" placeholder="DD/MM/YYY" type="text"/>
+                                    <input class="form-control" id="inputDateBegining" name="date" placeholder="DD/MM/YYY" type="text"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group"> <!-- Date input -->
                                     <label class="control-label" for="date">Fecha de finalización</label>
-                                    <input class="form-control" id="dateFinal" name="date" placeholder="DD/MM/YYY" type="text"/>
+                                    <input class="form-control" id="inputDateEnd" name="date" placeholder="DD/MM/YYY" type="text"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -161,11 +161,11 @@
 <!-- Template Main JS File -->
 <script src="assets/js/main.js"></script>
 
-<!-- API offers implementation -->
-<script src="assets/js/admin.js"></script>
-
 <!-- jQuery -->
 <script src="assets/js/jquery.js"></script>
+
+<!-- API offers implementation -->
+<script src="assets/js/admin.js"></script>
 
 <!-- Bootstrap Date-Picker Plugin -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
