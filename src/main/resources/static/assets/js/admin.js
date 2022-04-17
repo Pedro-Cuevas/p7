@@ -41,7 +41,7 @@ const createOfferAndDisplay = async () => {
 
 const getDates = async () => {
     let a = $('#inputDateBegining').val();
-    let b = $('#inputDateBegining').val();
+    let b = $('#inputDateEnd').val();
 
     let begining = a.substr(-4,4) + '-' + a.substr (3,2) + '-' + a.substr(0,2);
     let end = b.substr(-4,4) + '-' + b.substr (3,2) + '-' + b.substr(0,2);
