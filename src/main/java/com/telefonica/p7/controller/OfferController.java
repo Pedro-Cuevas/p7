@@ -38,6 +38,15 @@ public class OfferController {
         return ResponseEntity.ok().body(response);
     }
 
+    @GetMapping("/offers/and-applications")
+    public ResponseEntity<Iterable<Offer>> getOffersAndApplications() {
+
+        Iterable<Offer> response = offerService.getOffersAndApplications();
+
+        return ResponseEntity.ok().body(response);
+    }
+
+
 
     @GetMapping("/offers/{id}")
     public ResponseEntity<Offer> getOffer(@PathVariable String id){
