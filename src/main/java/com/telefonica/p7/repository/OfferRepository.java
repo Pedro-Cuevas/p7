@@ -15,7 +15,10 @@ public interface OfferRepository extends CrudRepository<Offer,String> {
     @Query("SELECT DISTINCT OFFER.ID, OFFER_NAME, DATE_BEGINING, DATE_END, OFFER_DESCRIPTION, OFFER_AVAILABLE FROM OFFER INNER JOIN APPLICATIONS ON OFFER.ID=APPLICATIONS.OFFER_ID")
     public Iterable<Offer> getOffersWithApplication();
 
-    @Query("SELECT * FROM OFFER FULL OUTER JOIN APPLICATIONS ON OFFER.ID=APPLICATIONS.OFFER_ID")
-    public Iterable<Offer> getOffersAndApplications();
+    @Query("SELECT * FROM OFFER LEFT OUTER JOIN APPLICATIONS ON OFFER.ID=APPLICATIONS.OFFER_ID")
+    public Iterable<Offer> getAllOffers();
+
+    @Query("SELECT * FROM OFFER LEFT OUTER JOIN APPLICATIONS ON OFFER.ID=APPLICATIONS.OFFER_ID WHERE APPLICATIONS.OFFER_ID IS NULL")
+    public Iterable<Offer> getEmptyOffers();
 }
 

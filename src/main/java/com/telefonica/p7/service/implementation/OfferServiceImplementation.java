@@ -28,8 +28,13 @@ public class OfferServiceImplementation implements OfferService{
     }
 
     @Override
-    public Iterable<Offer> getOffersAndApplications(){
-        return offerRepository.getOffersAndApplications();
+    public Iterable<Offer> getAllOffers(){
+        return offerRepository.getAllOffers();
+    }
+    
+    @Override
+    public Iterable<Offer> getEmptyOffers(){
+        return offerRepository.getEmptyOffers();
     }
 
     @Override
