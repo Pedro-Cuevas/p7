@@ -22,6 +22,8 @@ const createOfferAndDisplay = async () => {
         + end
         + '", "offerDescription": "'
         + $('#inputDescription').val()
+        + '", "offerAvailable": "'
+        + $('#available').val()
         + '"}';
 
     let request = await fetch("/api/v1/offers", {
@@ -73,6 +75,10 @@ const getOffersAndDisplay = async () => {
         res.forEach(obj => {
             $('#' + obj.id + 'delete_btn').click(() => deleteOfferAndUpdate(obj.id));
         });
+
+        res.forEach(obj => {
+            $('#' + obj.id + 'edit_btn').click(() => editOffer(obj.id));
+        });
     }
 
     let val = $('#inputDateBegining').val();
@@ -81,3 +87,35 @@ const getOffersAndDisplay = async () => {
 
 $('#btnOferta').click(() => createOfferAndDisplay());
 getOffersAndDisplay();
+
+const editOffer = async (id) => {
+    let request = await fetch("/api/v1/offers/" + id, {
+        method: 'GET',
+    }); 
+    if(request.ok){
+        getOffersAndDisplay();
+        $('#inputName').val() = request.offerName;
+        $('#inputDateBegining').val() = request.dateBegining;
+        $('#inputDateEnd').val() = request.dateEnd;
+        $('#inputDescription').val() = request.offerDescription;
+        $('#available').val() = request.offerAvailable;
+    }
+
+    let dates = await getDates();
+    begin = dates.begining;
+    end = dates.end;
+
+    let txt_body = '{ "offerName": "'
+        + $('#inputName').val()
+        + '", "dateBegining": "'
+        + begin
+        + '", "dateEnd": "'
+        + end
+        + '", "offerDescription": "'
+        + $('#inputDescription').val()
+        + '", "offerAvailable": "'
+        + $('#available').val()
+        + '"}';
+
+}
+

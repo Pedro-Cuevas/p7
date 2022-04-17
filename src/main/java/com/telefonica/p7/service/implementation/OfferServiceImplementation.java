@@ -13,8 +13,26 @@ public class OfferServiceImplementation implements OfferService{
     private OfferRepository offerRepository;
 
     @Override
-    public Iterable<Offer> getOffer(){
-        return offerRepository.findAll();
+    public Iterable<Offer> getOffers(String offerAvailable){
+        if(offerAvailable == null){
+            return offerRepository.findAll();
+        } else {
+            return offerRepository.getOffersAvailable(offerAvailable);
+        }
+        
+    }
+
+    @Override
+    public Offer getOffer(String id){
+        Offer response = null;
+        if(offerRepository.existsById(id)){
+            Iterable<Offer> offers = offerRepository.getOfferByID(id);
+            for(Offer offer : offers){
+                response = offer;
+            }
+            return response;            
+        }
+        return response;
     }
 
     @Override
@@ -25,6 +43,16 @@ public class OfferServiceImplementation implements OfferService{
     @Override
     public Offer insertOffer(Offer offer){
         return offerRepository.save(offer);
+    }
+
+    @Override
+    public Offer updateOffer(String id, Offer offer){
+        if(offerRepository.existsById(id)){
+            return offerRepository.save(offer);
+        } else {
+            return null;
+        }
+        
     }
     
 }

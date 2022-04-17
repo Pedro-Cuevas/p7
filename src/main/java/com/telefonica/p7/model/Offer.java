@@ -19,6 +19,7 @@ public class Offer {
     private LocalDate dateBegining;
     private LocalDate dateEnd;
     private String offerDescription;
+    private String offerAvailable;
 
     public String getId() {
         return this.id;
@@ -58,6 +59,14 @@ public class Offer {
 
     public void setOfferDescription(String offerDescription) {
         this.offerDescription = offerDescription;
+    }
+
+    public String getOfferAvailable() {
+        return offerAvailable;
+    }
+
+    public void setOfferAvailable(String offerAvailable) {
+        this.offerAvailable = offerAvailable;
     }
 
 }
