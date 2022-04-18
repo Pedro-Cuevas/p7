@@ -13,6 +13,11 @@ const clearAll= () => {
     let available = document.getElementById("available");
     available.outerHTML = '<input class="form-check-input" type="checkbox" value="" id="available">';
 
+    let boton = document.getElementById("btnOferta");
+    //boton.setAttribute("id", "btnOferta");
+    boton.innerHTML = "Subir oferta";
+
+
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,6 +81,7 @@ const getDates = async () => {
     return {begining, end}
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 const getAvailable = async () => {
     let available = document.getElementById("available");
     let txtAvailable;
@@ -153,6 +159,7 @@ const editOffer = async (id) => {
         }
         
         let boton = document.getElementById("btnOferta");
+       //boton.setAttribute("id", "btnCambios");
         boton.innerHTML = "Guardar cambios";
 
         $('#btnOferta').click(() => updateOffers(id));
@@ -221,5 +228,13 @@ $('#btnOferta').click(() => createOfferAndDisplay());
 getOffersAndDisplay();
 
 
+// el problema es que al presionar el boton se ejecutan los dos métodos a los que se llama
+// al hacer click. He probado con setAttribute y da error a la larga
 
+// Además, al hacer PUT no se actualiza la oferta, sino que se crea una nueva y no se borra la anterior
+
+// Cuando da error con POST es por el formato de las fechas (al seleccionar en el calendario tienen uno
+// y al ponerse al dar a editar se ponen otras)
+
+// Otro error es que si das a actualizar por segunda vez, se crean dos nuevas. Si das tres, se crean tres nuevas, etc
 
