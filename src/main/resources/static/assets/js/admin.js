@@ -1,3 +1,21 @@
+//leaves spaces blank
+const clearAll= () => {
+    let nombre = document.getElementById("inputName");
+    nombre.value = "";
+
+    let inicio = document.getElementById("inputDateBegining");
+    inicio.value = "";
+    let fin = document.getElementById("inputDateEnd");
+    fin.value = "";
+
+    let descripcion = document.getElementById("inputDescription");
+    descripcion.value ="";
+    let available = document.getElementById("available");
+    available.outerHTML = '<input class="form-check-input" type="checkbox" value="" id="available">';
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 // deletes an offer, gets the new list of offers and displays it
 const deleteOfferAndUpdate = async (id) => {
     let request = await fetch("/api/v1/offers/" + id, {
@@ -5,10 +23,12 @@ const deleteOfferAndUpdate = async (id) => {
     });
 
     if(request.ok) {
-        getOffersAndDisplay();
+        console.log("oferta eliminada");
+        getOffersAndDisplay();        
     }
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 // creates an offer, gets the new list of offers and displays it
 const createOfferAndDisplay = async () => {
 
@@ -39,11 +59,13 @@ const createOfferAndDisplay = async () => {
     });
 
     if(request.ok) {
+        console.log("oferta creada");
+        clearAll();
         getOffersAndDisplay();
     }
 }
 
-// deletes an offer, gets the new list of offers and displays it
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 const getDates = async () => {
     let a = $('#inputDateBegining').val();
     let b = $('#inputDateEnd').val();
@@ -54,6 +76,20 @@ const getDates = async () => {
     return {begining, end}
 }
 
+const getAvailable = async () => {
+    let available = document.getElementById("available");
+    let txtAvailable;
+        
+    if (available.outerHTML = '<input class="form-check-input" type="checkbox" value="" id="available">') {
+        txtAvailable == "No disponible";
+    } else {
+        txtAvailable == "Disponible"
+    }
+
+    return txtAvailable;
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 // gets the new list of offers and displays it
 const getOffersAndDisplay = async () => {
     let request = await fetch("/api/v1/offers", {
@@ -85,15 +121,105 @@ const getOffersAndDisplay = async () => {
         });
     }
 
-    let val = $('#inputDateBegining').val();
-    console.log(val);
+    //let val = $('#inputDateBegining').val();
+    //console.log(val);
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//lets user edit an offer
+const editOffer = async (id) => {
+    let request = await fetch("/api/v1/offers/"+ id, {
+        method: 'GET',
+    });
+
+    if(request.ok) {
+        let obj = await request.json();
+        let nombre = document.getElementById("inputName");
+        nombre.value = obj.offerName;
+
+        let inicio = document.getElementById("inputDateBegining");
+        inicio.value = obj.dateBegining;
+        let fin = document.getElementById("inputDateEnd");
+        fin.value = obj.dateEnd;
+
+        let descripcion = document.getElementById("inputDescription");
+        descripcion.value = obj.offerDescription;
+        let available = document.getElementById("available");
+       
+        if(obj.offerAvailable == "No disponible"){
+            available.outerHTML = '<input class="form-check-input" type="checkbox" value="" id="available">';
+        } else {
+            available.outerHTML = '<input class="form-check-input" type="checkbox" value="" id="available" checked>';
+        }
+        
+        let boton = document.getElementById("btnOferta");
+        boton.innerHTML = "Guardar cambios";
+
+        $('#btnOferta').click(() => updateOffers(id));
+        
+    }
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+//lets user upload offer editted
+const updateOffers = async (id) => {
+    let request = await fetch("/api/v1/offers/"+ id, {
+        method: 'GET',
+    });
+
+    if(request.ok) {
+        
+        let dates = await getDates();
+        begin = dates.begining;
+        end = dates.end;
+
+        let available = await getAvailable();
+
+        let txt_body = '{ "offerName": "'
+            + $('#inputName').val()
+            + '", "dateBegining": "'
+            + $('#inputDateBegining').val()
+            + '", "dateEnd": "'
+            + $('#inputDateEnd').val()
+            + '", "offerDescription": "'
+            + $('#inputDescription').val()
+            + '", "offerAvailable": "'
+            + available
+            + '"}';
+
+        let request2 = await fetch("/api/v1/offers/" + id, {
+            body: txt_body,
+            method: 'PUT',
+            //body: txt_body,
+            headers: {
+                "Content-Type": "application/json", // Indico que mis datos van a estar en JSON
+            },
+            dataType: "json",
+        });
+
+        if(request2.ok) {
+            console.log("oferta actualizada");
+            clearAll();
+            getOffersAndDisplay();
+        }
+    }
+}
+
+//const updateOrCreate = () => {
+//    let boton = document.getElementById("btnOferta");
+//    if(boton.innerHTML == "Guardar cambios"){
+//        updateOffers();
+//    } else {
+//        createOfferAndDisplay();
+//    }
+    
+//}
+
+/////////////////////////////////////////////////////////////////////////////////
 
 $('#btnOferta').click(() => createOfferAndDisplay());
 getOffersAndDisplay();
 
-const editOffer = async (id) => {
-    console.log("HOLA");
 
-}
+
 
