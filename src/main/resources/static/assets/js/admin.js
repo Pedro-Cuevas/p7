@@ -13,11 +13,14 @@ const clearAll= () => {
     let available = document.getElementById("available");
     available.outerHTML = '<input class="form-check-input" type="checkbox" value="" id="available">';
 
-    let boton = document.getElementById("btnOferta");
-    //boton.setAttribute("id", "btnOferta");
-    boton.innerHTML = "Subir oferta";
-
-
+    if(document.getElementById("btnCambios") != null){
+        let boton = document.getElementById("btnCambios");
+        boton.outerHTML = '<button type="button" class="btn btn-primary mt-1" id="btnOferta">Subir oferta</button>';
+        $('#btnOferta').click(() => createOfferAndDisplay());
+    } else {
+        $('#btnCambios').click(() => updateOffers(id));
+    }
+    
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -158,11 +161,12 @@ const editOffer = async (id) => {
             available.outerHTML = '<input class="form-check-input" type="checkbox" value="" id="available" checked>';
         }
         
-        let boton = document.getElementById("btnOferta");
-       //boton.setAttribute("id", "btnCambios");
-        boton.innerHTML = "Guardar cambios";
-
-        $('#btnOferta').click(() => updateOffers(id));
+        if(document.getElementById("btnOferta") != null){
+            let boton = document.getElementById("btnOferta");
+            boton.outerHTML = '<button type="button" class="btn btn-primary mt-1" id="btnCambios">Guardar cambios</button>';
+        }
+        
+        $('#btnCambios').click(() => updateOffers(id));
         
     }
 }
@@ -175,19 +179,38 @@ const updateOffers = async (id) => {
     });
 
     if(request.ok) {
-        
-        let dates = await getDates();
-        begin = dates.begining;
-        end = dates.end;
+        let obj = await request.json();
+        let begin;
+        let end;
+        console.log(obj.dateBegining);
+        //console.log($('#inputDateBegining').val());
+        if(($('#inputDateBegining').val() == obj.dateBegining) && ($('#inputDateEnd').val() ==obj.dateEnd)){
+            begin = $('#inputDateBegining').val();
+            end = $('#inputDateEnd').val();
+        } else if ($('#inputDateBegining').val() == obj.dateBegining) {
+            let dates = await getDates();
+            begin = $('#inputDateBegining').val();
+            end = dates.end;
+        } else if ($('#inputDateEnd').val() ==obj.dateEnd){
+            let dates = await getDates();
+            begin = dates.begining;
+            end = $('#inputDateEnd').val();
+        } else {
+            let dates = await getDates();
+            begin = dates.begining;
+            end = dates.end;
+        }
 
         let available = await getAvailable();
 
-        let txt_body = '{ "offerName": "'
+        let txt_body = '{ "id": "'
+            + id
+            + '", "offerName": "'
             + $('#inputName').val()
             + '", "dateBegining": "'
-            + $('#inputDateBegining').val()
+            + begin
             + '", "dateEnd": "'
-            + $('#inputDateEnd').val()
+            + end
             + '", "offerDescription": "'
             + $('#inputDescription').val()
             + '", "offerAvailable": "'
@@ -212,15 +235,6 @@ const updateOffers = async (id) => {
     }
 }
 
-//const updateOrCreate = () => {
-//    let boton = document.getElementById("btnOferta");
-//    if(boton.innerHTML == "Guardar cambios"){
-//        updateOffers();
-//    } else {
-//        createOfferAndDisplay();
-//    }
-    
-//}
 
 /////////////////////////////////////////////////////////////////////////////////
 
@@ -228,13 +242,8 @@ $('#btnOferta').click(() => createOfferAndDisplay());
 getOffersAndDisplay();
 
 
-// el problema es que al presionar el boton se ejecutan los dos métodos a los que se llama
-// al hacer click. He probado con setAttribute y da error a la larga
 
-// Además, al hacer PUT no se actualiza la oferta, sino que se crea una nueva y no se borra la anterior
 
-// Cuando da error con POST es por el formato de las fechas (al seleccionar en el calendario tienen uno
-// y al ponerse al dar a editar se ponen otras)
+// Si das a editar una oferta y, sin guardar editas otra, se actualizan las dos
 
-// Otro error es que si das a actualizar por segunda vez, se crean dos nuevas. Si das tres, se crean tres nuevas, etc
-
+//Después de editar alguna oferta no se pueden subir otras
