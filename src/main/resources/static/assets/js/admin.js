@@ -246,5 +246,3 @@ getOffersAndDisplay();
 
 
 // Si das a editar una oferta y, sin guardar editas otra, se actualizan las dos
-
-//Después de editar alguna oferta no se pueden subir otras
